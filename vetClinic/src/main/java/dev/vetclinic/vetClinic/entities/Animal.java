@@ -19,10 +19,10 @@ public class Animal {
     @Column(unique = true, name = "animal_id")
     private Long id;
 
-    @Column(length = 100, nullable = false, name = "animal_name")
+    @Column( name = "animal_name")
     private String name;
 
-    @Column(length = 100, nullable = false, name = "animal_species" )
+    @Column( name = "animal_species" )
     private String species;
 
     @Column(length = 100, name = "animal_breed")

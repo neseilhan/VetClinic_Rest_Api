@@ -1,6 +1,7 @@
 package dev.vetclinic.vetClinic.business.abstracts;
 
 import dev.vetclinic.vetClinic.entities.Animal;
+import dev.vetclinic.vetClinic.entities.Customer;
 
 public interface IAnimalService {
 
@@ -10,8 +11,9 @@ public interface IAnimalService {
 
     Animal getByName(String name);
 
+    Customer getByCustomerName(String name);
+
     Animal update(Animal animal);
 
-    boolean delete(long id);
-
+    boolean delete(Long id);
 }

@@ -16,9 +16,22 @@ import org.springframework.validation.FieldError;
 @ControllerAdvice
 public class GlobalExceptionHandler  {
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Result> handleNotFoundException(NotFoundException e){
-        return new ResponseEntity<>(ResultHelper.notFoundError(e.getMessage()), HttpStatus.NOT_FOUND);
+//    @ExceptionHandler(recordAlreadyExistException.class)
+//    public ResponseEntity<ResultData<Void>> handleAlreadyExistsException(recordAlreadyExistException ex) {
+//        ResultData<Void> result = new ResultData<>("409", ex.getMessage(), false, null);
+//        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
+//    }
+
+    @ExceptionHandler(recordNotFoundWithIdException.class)
+    public ResponseEntity<Result> handleRecordNotFoundException(recordNotFoundWithIdException ex) {
+        Result result = ResultHelper.recordNotFoundWithId(ex.getId());
+        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(recordAlreadyExistException.class)
+    public ResponseEntity<ResultData<Void>> handleAlreadyExistsException(recordAlreadyExistException ex) {
+        ResultData<Void> result = new ResultData<>("409", ex.getMessage(), false, null);
+        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResultData<List<String>>> handleValidationErrors(MethodArgumentNotValidException e){
