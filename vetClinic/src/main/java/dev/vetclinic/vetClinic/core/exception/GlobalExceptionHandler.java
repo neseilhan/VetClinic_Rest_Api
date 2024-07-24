@@ -23,14 +23,14 @@ public class GlobalExceptionHandler  {
 //    }
 
     @ExceptionHandler(recordNotFoundWithIdException.class)
-    public ResponseEntity<Result> handleRecordNotFoundException(recordNotFoundWithIdException ex) {
-        Result result = ResultHelper.recordNotFoundWithId(ex.getId());
+    public ResponseEntity<Result> handleRecordNotFoundException(recordNotFoundWithIdException e) {
+        Result result = ResultHelper.recordNotFoundWithId(e.getId());
         return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(recordAlreadyExistException.class)
-    public ResponseEntity<ResultData<Void>> handleAlreadyExistsException(recordAlreadyExistException ex) {
-        ResultData<Void> result = new ResultData<>("409", ex.getMessage(), false, null);
+    public ResponseEntity<ResultData<Void>> handleAlreadyExistsException(recordAlreadyExistException e) {
+        ResultData<Void> result = new ResultData<>("409", e.getMessage(), false, null);
         return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)

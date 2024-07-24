@@ -20,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/animals")
 public class AnimalController {
@@ -33,18 +35,47 @@ public class AnimalController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/save")
+//    @PostMapping("/save")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
+//        Animal saveAnimal = this.modelMapper.forRequest().map(animalSaveRequest, Animal.class);
+//        this.animalService.save(saveAnimal);
+//        AnimalResponse animalResponse = this.modelMapper.forResponse().map(saveAnimal, AnimalResponse.class);
+//        return ResultHelper.created(animalResponse);
+//    }
+
+
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
-        Animal saveAnimal = this.modelMapper.forRequest().map(animalSaveRequest, Animal.class);
-        this.animalService.save(saveAnimal);
-        AnimalResponse animalResponse = this.modelMapper.forResponse().map(saveAnimal, AnimalResponse.class);
-        return ResultHelper.created(animalResponse);
+        // Convert the request DTO to the entity
+        Animal animal = modelMapper.forRequest().map(animalSaveRequest, Animal.class);
+
+        try {
+            // Save the animal entity
+            Animal savedAnimal = animalService.save(animal);
+            // Convert the saved entity to response DTO
+            AnimalResponse animalResponse = this.modelMapper.forResponse().map(savedAnimal, AnimalResponse.class);
+            return ResultHelper.created(animalResponse);
+        } catch (recordAlreadyExistException e) {
+            // Handle case where record already exists
+            return ResultHelper.recordAlreadyExistsError(e.getId(), AnimalResponse.class);
+        }
+    }
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalResponse>> getAll() {
+        List<Animal> animals = this.animalService.findAll();
+        List<AnimalResponse> animalResponses = animals.stream()
+                .map(animal -> this.modelMapper.forResponse().map(animal, AnimalResponse.class))
+                .toList();
+        return ResultHelper.success(animalResponses);
     }
 
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<AnimalResponse> getById(@PathVariable("id") long id) {
+    public ResultData<AnimalResponse> getById(@PathVariable("id") Long id) {
         Animal animal = this.animalService.get(id);
         AnimalResponse animalResponse = this.modelMapper.forResponse().map(animal, AnimalResponse.class);
         return ResultHelper.success(animalResponse);
@@ -68,7 +99,7 @@ public class AnimalController {
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public Result update(@PathVariable("id") long id, @RequestBody Animal animal) {
+    public Result update(@PathVariable("id") Long id, @RequestBody Animal animal) {
         try {
             animal.setId(id); // Ensure the ID from the path is used
             animalService.update(animal);
@@ -84,7 +115,7 @@ public class AnimalController {
     }
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Result delete(@PathVariable("id") long id) {
+    public Result delete(@PathVariable("id") Long id) {
         try {
             this.animalService.delete(id);
         } catch (NotFoundException e) {

@@ -8,9 +8,9 @@ public interface ICustomerService {
 
     Customer update(Customer customer);
 
-    Customer get(long id);
+    Customer get(Long id);
 
-    boolean delete(long id);
+    boolean delete(Long id);
 
     Customer getByName(String name);
 }

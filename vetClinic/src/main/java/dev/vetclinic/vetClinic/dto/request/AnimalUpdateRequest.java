@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class AnimalUpdateRequest {
     @Positive(message = "ID should be positive.")
-    private long id;
+    private Long id;
 
     @NotNull(message = "Customer name can not be null.")
     @NotEmpty

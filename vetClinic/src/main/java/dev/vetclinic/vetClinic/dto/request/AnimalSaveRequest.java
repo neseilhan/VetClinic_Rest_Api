@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnimalSaveRequest {
-    @NotNull(message = "Customer name can not be null.")
-    @NotEmpty
+
+    @NotNull(message = "Name can not be null.")
     private String name;
 
     private String species;
@@ -27,5 +27,5 @@ public class AnimalSaveRequest {
     private LocalDate birthDate;
 
     @NotNull(message = "Customer id can not be null.")
-    private long customerId;
+    private Long customerId;
 }

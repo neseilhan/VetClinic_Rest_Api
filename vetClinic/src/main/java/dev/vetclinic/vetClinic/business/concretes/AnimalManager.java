@@ -11,6 +11,8 @@ import dev.vetclinic.vetClinic.repo.AnimalRepo;
 import dev.vetclinic.vetClinic.repo.CustomerRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AnimalManager implements IAnimalService {
 
@@ -32,7 +34,7 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal get(long id) {
+    public Animal get(Long id) {
         return this.animalRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
     }
 
@@ -61,6 +63,10 @@ public class AnimalManager implements IAnimalService {
             throw new NotFoundException(Msg.NOT_FOUND);
         }
         return customer;
+    }
+    @Override
+    public List<Animal> findAll() {
+        return animalRepo.findAll();
     }
 
     @Override

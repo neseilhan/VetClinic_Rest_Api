@@ -1,7 +1,7 @@
 package dev.vetclinic.vetClinic.core.exception;
 
 public class recordAlreadyExistException extends RuntimeException {
-        private Long id;
+        private final Long id;
 
         public recordAlreadyExistException(Long id) {
             super(id + " id’li kayıt zaten mevcut.");
@@ -11,4 +11,8 @@ public class recordAlreadyExistException extends RuntimeException {
         public Long getId() {
             return id;
         }
+//
+//    public recordAlreadyExistException(String message) {
+//        super(message);
+//    }
 }

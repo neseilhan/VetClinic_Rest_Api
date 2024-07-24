@@ -1,6 +1,6 @@
 package dev.vetclinic.vetClinic.core.config;
 
-import dev.vetclinic.vetClinic.dto.response.AnimalResponse;
+import dev.vetclinic.vetClinic.dto.response.CustomerResponse;
 
 public class ResultHelper {
 
@@ -51,8 +51,12 @@ public class ResultHelper {
     public static Result doctorSelectIdNullError(){
         return new Result("400", Msg.DOCTOR_SELECT_ID_NULL, false);
     }
-    public static Result recordAlreadyExistsError(Long id) {
-        return new Result("409", id + Msg.RECORD_ALREADY_EXISTS, false);
+
+//    public static Result recordAlreadyExistsError(Long id, Class<CustomerResponse> customerResponseClass) {
+//        return new Result("409", id + Msg.RECORD_ALREADY_EXISTS, false);
+//    }
+    public static <T> ResultData<T> recordAlreadyExistsError(Long id, Class<T> responseClass) {
+        return new ResultData<>("409", id + Msg.RECORD_ALREADY_EXISTS, false, null);
     }
     public static Result recordNotFoundWithId(Long id) {
         return new Result("404", id + Msg.RECORD_NOT_FOUND_WITH_ID, false);
