@@ -58,8 +58,12 @@ public class AnimalController {
             AnimalResponse animalResponse = this.modelMapper.forResponse().map(savedAnimal, AnimalResponse.class);
             return ResultHelper.created(animalResponse);
         } catch (recordAlreadyExistException e) {
+            // Fetch the existing animal entity
+            Animal existingAnimal = animalService.get(e.getId());
+            // Convert the existing entity to response DTO
+            AnimalResponse existingAnimalResponse = this.modelMapper.forResponse().map(existingAnimal, AnimalResponse.class);
             // Handle case where record already exists
-            return ResultHelper.recordAlreadyExistsError(e.getId(), AnimalResponse.class);
+            return ResultHelper.recordAlreadyExistsError(e.getId(), existingAnimalResponse);
         }
     }
 

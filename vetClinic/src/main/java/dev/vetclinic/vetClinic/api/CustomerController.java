@@ -37,15 +37,19 @@ public class CustomerController {
         Customer customer = modelMapper.forRequest().map(customerSaveRequest, Customer.class);
 
         try {
-            // Save the animal entity
+            // Save the customer entity
             Customer saveCustomer = customerService.save(customer);
-//            saveCustomer.setId(0L);
+
             // Convert the saved entity to response DTO
             CustomerResponse customerResponse = this.modelMapper.forResponse().map(saveCustomer, CustomerResponse.class);
             return ResultHelper.created(customerResponse);
         } catch (recordAlreadyExistException e) {
+            // Fetch the existing customer entity
+            Customer existingCustomer = customerService.get(e.getId());
+            // Convert the existing entity to response DTO
+            CustomerResponse existingCustomerResponse = this.modelMapper.forResponse().map(existingCustomer, CustomerResponse.class);
             // Handle case where record already exists
-            return ResultHelper.recordAlreadyExistsError(e.getId(), CustomerResponse.class);
+            return ResultHelper.recordAlreadyExistsError(e.getId(), existingCustomerResponse);
         }
     }
 

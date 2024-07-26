@@ -36,7 +36,7 @@ public class Vaccine {
 
     // Relations of tables
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "animal_vaccine_id", referencedColumnName = "animal_id")
     private Animal animal;
 

@@ -38,8 +38,8 @@ public class ResultHelper {
 //    public static Result recordAlreadyExistsError(Long id, Class<CustomerResponse> customerResponseClass) {
 //        return new Result("409", id + Msg.RECORD_ALREADY_EXISTS, false);
 //    }
-    public static <T> ResultData<T> recordAlreadyExistsError(Long id, Class<T> responseClass) {
-        return new ResultData<>("409",  Msg.RECORD_ALREADY_EXISTS +id, false, null);
+    public static <T> ResultData<T> recordAlreadyExistsError(Long id, T data) {
+        return new ResultData<>("409",  Msg.RECORD_ALREADY_EXISTS +id, false, data);
     }
     public static Result recordNotFoundWithId(Long id) {
         return new Result("404",  Msg.RECORD_NOT_FOUND_WITH_ID +id,   false);

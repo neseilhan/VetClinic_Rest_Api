@@ -26,13 +26,17 @@ public class AnimalManager implements IAnimalService {
 
     @Override
     public Animal save(Animal animal) {
-        // Check if an animal with the same ID already exists
-        if (animalRepo.existsById(animal.getId())) {
-            throw new recordAlreadyExistException(animal.getId());
+        Animal existingAnimal = animalRepo.findByName(animal.getName());
+        if (existingAnimal != null) {
+            // Eğer mevcut hayvan varsa hata
+            throw new recordAlreadyExistException(existingAnimal.getId());
         }
-
-        // Save the new animal
+        animal.setId(null);
         return animalRepo.save(animal);
+    }
+
+    public Animal findById(Long id) {
+        return animalRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
     }
 
     @Override
