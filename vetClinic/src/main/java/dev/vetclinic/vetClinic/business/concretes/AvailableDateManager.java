@@ -1,28 +1,49 @@
 package dev.vetclinic.vetClinic.business.concretes;
 
 import dev.vetclinic.vetClinic.business.abstracts.IAvailableDateService;
+import dev.vetclinic.vetClinic.core.config.Msg;
+import dev.vetclinic.vetClinic.core.exception.NotFoundException;
+import dev.vetclinic.vetClinic.core.exception.recordNotFoundWithIdException;
+import dev.vetclinic.vetClinic.core.modelMapper.IModelMapperService;
+import dev.vetclinic.vetClinic.entities.Animal;
 import dev.vetclinic.vetClinic.entities.AvailableDate;
+import dev.vetclinic.vetClinic.repo.AvailableDateRepo;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AvailableDateManager implements IAvailableDateService {
+
+    private final AvailableDateRepo availableDateRepository;
+
+    public AvailableDateManager(AvailableDateRepo availableDateRepository) {
+        this.availableDateRepository = availableDateRepository;
+    }
+
     @Override
     public AvailableDate save(AvailableDate availableDate) {
-        return null;
+        return this.availableDateRepository.save(availableDate);
     }
 
     @Override
     public AvailableDate update(AvailableDate availableDate) {
-        return null;
+        if (this.get(availableDate.getId()) == null) {
+            throw new recordNotFoundWithIdException(availableDate.getId());
+        }
+        return this.availableDateRepository.save(availableDate);
     }
 
     @Override
-    public AvailableDate get(long id) {
-        return null;
+    public AvailableDate get(Long id) {
+        return this.availableDateRepository.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
+    public boolean delete(Long id) {
+        AvailableDate availableDate = this.get(id);
+        if (availableDate == null) {
+            throw new recordNotFoundWithIdException(id);
+        }
+        this.availableDateRepository.delete(availableDate);
+        return true;
     }
 }
