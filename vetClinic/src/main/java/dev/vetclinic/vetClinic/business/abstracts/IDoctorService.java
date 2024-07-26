@@ -8,9 +8,9 @@ public interface IDoctorService {
 
     Doctor update(Doctor doctor);
 
-    Doctor get(long id);
+    Doctor get(Long id);
 
-    boolean delete(long id);
+    boolean delete(Long id);
 
     Doctor getByName(String name);
 

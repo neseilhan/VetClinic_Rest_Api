@@ -26,7 +26,7 @@ public class Doctor {
     private String phone;
 
     @Column(name = "doctor_email")
-    private String email;
+    private String mail;
 
     @Column(name = "doctor_address")
     private String address;
