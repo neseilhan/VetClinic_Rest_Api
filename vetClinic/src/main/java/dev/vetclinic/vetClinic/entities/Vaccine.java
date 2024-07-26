@@ -17,7 +17,7 @@ public class Vaccine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, name = "vaccine_id")
+    @Column(name = "vaccine_id")
     private Long id;
 
     @Column(name = "vaccine_name")
@@ -36,8 +36,8 @@ public class Vaccine {
 
     // Relations of tables
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_vaccine_id", referencedColumnName = "animal_id")
     private Animal animal;
 
 

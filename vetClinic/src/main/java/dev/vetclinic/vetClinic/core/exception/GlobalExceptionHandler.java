@@ -16,11 +16,25 @@ import org.springframework.validation.FieldError;
 @ControllerAdvice
 public class GlobalExceptionHandler  {
 
+    @ExceptionHandler(vaccineValidityDateException.class)
+    public ResponseEntity<Result> handleVaccineValidityDateException(vaccineValidityDateException e){
+        Result result = ResultHelper.vaccineValidityError(e.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+    }
+
 //    @ExceptionHandler(recordAlreadyExistException.class)
 //    public ResponseEntity<ResultData<Void>> handleAlreadyExistsException(recordAlreadyExistException ex) {
 //        ResultData<Void> result = new ResultData<>("409", ex.getMessage(), false, null);
 //        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
 //    }
+
+
+    @ExceptionHandler(VaccineNotApplicableException.class)
+    public ResponseEntity<Result> handleVaccineNotApplicableError(VaccineNotApplicableException e) {
+        Result result = ResultHelper.vaccineNotApplicableError(e.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
+    }
+
 
     @ExceptionHandler(recordNotFoundWithIdException.class)
     public ResponseEntity<Result> handleRecordNotFoundException(recordNotFoundWithIdException e) {

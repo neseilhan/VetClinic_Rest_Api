@@ -11,13 +11,12 @@ public interface IVaccineService {
 
     Vaccine update(Vaccine vaccine);
 
-    Vaccine get(long id);
+    Vaccine get(Long id);
 
-    boolean delete(long id);
+    boolean delete(Long id);
 
-    Vaccine getById(long id);
+    List<Vaccine> getByAnimalId(Long animalId);
 
-    List<Vaccine> getVaccinationsByAnimalName(String animalName);
+    List<Vaccine> getVaccinesByEndDateBetween(LocalDate startDate, LocalDate endDate);
 
-    List<Vaccine> getVaccinationsExpiringBetween(LocalDate startDate, LocalDate endDate);
 }

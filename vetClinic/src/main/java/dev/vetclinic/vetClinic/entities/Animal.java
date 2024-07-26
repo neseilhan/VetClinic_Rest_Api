@@ -16,7 +16,7 @@ import java.util.List;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, name = "animal_id")
+    @Column(name = "animal_id")
     private Long id;
 
     @Column( name = "animal_name")
@@ -40,14 +40,14 @@ public class Animal {
 
    // Relations of tables
 
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Appointment> appointmentList;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "animal_customer_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY,  cascade = CascadeType.REMOVE)
     private List<Vaccine> vaccineList;
 
 

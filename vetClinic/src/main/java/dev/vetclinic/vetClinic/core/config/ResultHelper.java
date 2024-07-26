@@ -1,7 +1,5 @@
 package dev.vetclinic.vetClinic.core.config;
 
-import dev.vetclinic.vetClinic.dto.response.CustomerResponse;
-
 public class ResultHelper {
 
     public static <T> ResultData<T> created(T data){
@@ -24,21 +22,6 @@ public class ResultHelper {
         return new Result("404", Msg.NOT_FOUND, false);
     }
 
-    public static Result dateError(){
-        return new Result("400", Msg.DATE_ERROR, false);
-    }
-
-    public static Result vaccineError(){
-        return new Result("400", Msg.VACCINE_ERROR, false);
-    }
-
-    public static Result doctorError(){
-        return new Result("400", Msg.DOCTOR_ERROR, false);
-    }
-
-    public static Result appointmentError(){
-        return new Result("400", Msg.APPOINTMENT_ERROR, false);
-    }
 
     public static Result notAvailableError(){
         return new Result("400", Msg.NOT_AVAILABLE_ERROR, false);
@@ -56,21 +39,18 @@ public class ResultHelper {
 //        return new Result("409", id + Msg.RECORD_ALREADY_EXISTS, false);
 //    }
     public static <T> ResultData<T> recordAlreadyExistsError(Long id, Class<T> responseClass) {
-        return new ResultData<>("409", id + Msg.RECORD_ALREADY_EXISTS, false, null);
+        return new ResultData<>("409",  Msg.RECORD_ALREADY_EXISTS +id, false, null);
     }
     public static Result recordNotFoundWithId(Long id) {
-        return new Result("404", id + Msg.RECORD_NOT_FOUND_WITH_ID, false);
+        return new Result("404",  Msg.RECORD_NOT_FOUND_WITH_ID +id,   false);
     }
 
+    public static Result vaccineValidityError(String Message) {
+        return new Result("400", Msg.DATE_ERROR, false);
+    }
 
+    public static Result vaccineNotApplicableError(String Message) {
+        return new Result("409",  Msg.VACCINE_ERROR , false);
+    }
 
-    //    public static <T> ResultData<CursorResponse<T>> cursor(Page<T> pageData) {
-//        CursorResponse<T> cursor = new CursorResponse<>();
-//        cursor.setItems(pageData.getContent());
-//        cursor.setPageNumber(pageData.getNumber());
-//        cursor.setPageSize(pageData.getSize());
-//        cursor.setTotalElements(pageData.getTotalElements());
-//
-//        return ResultHelper.success(cursor);
-//    }
 }

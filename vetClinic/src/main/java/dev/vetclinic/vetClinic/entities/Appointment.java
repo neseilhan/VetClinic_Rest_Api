@@ -16,7 +16,7 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, name = "appointment_id")
+    @Column(name = "appointment_id")
     private Long id;
 
     @Column( name = "appointment_date")
@@ -24,11 +24,11 @@ public class Appointment {
 
     // Relations of tables
     @ManyToOne
-    @JoinColumn(name = "appointment_doctor_id")
+    @JoinColumn(name = "appointment_doctor_id", referencedColumnName = "doctor_id")
     private Doctor doctor;
 
     @ManyToOne
-    @JoinColumn(name = "appointment_animal_id")
+    @JoinColumn(name = "appointment_animal_id", referencedColumnName = "animal_id")
     private Animal animal;
 
 
