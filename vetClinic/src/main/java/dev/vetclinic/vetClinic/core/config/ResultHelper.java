@@ -53,4 +53,11 @@ public class ResultHelper {
         return new Result("409",  Msg.VACCINE_ERROR , false);
     }
 
+    public static <T> ResultData<T> appointmentAlreadyExistError(Long id, T data) {
+        return new ResultData<>("409",  Msg.DOCTOR_ERROR +id, false, data);
+    }
+
+    public static Result appointmentHoursError(String Message) {
+        return new Result("409",  Msg.APPOINTMENT_ERROR , false);
+    }
 }

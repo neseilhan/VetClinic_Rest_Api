@@ -9,13 +9,13 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "date")
+@Table(name = "available_date")
 @NoArgsConstructor
 @AllArgsConstructor
 public class AvailableDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, name = "date_id")
+    @Column(unique = true, name = "available_date_id")
     private Long id;
 
     @Column(name = "available_date")

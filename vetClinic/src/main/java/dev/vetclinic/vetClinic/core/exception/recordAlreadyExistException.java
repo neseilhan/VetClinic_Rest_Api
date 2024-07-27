@@ -12,7 +12,7 @@ public class recordAlreadyExistException extends RuntimeException {
             return id;
         }
 //
-//    public recordAlreadyExistException(String message) {
+//    public appointmentAlreadyExistException(String message) {
 //        super(message);
 //    }
 }

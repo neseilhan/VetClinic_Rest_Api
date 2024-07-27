@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class Animal {
    // Relations of tables
 
     @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonBackReference
     private List<Appointment> appointmentList;
 
     @ManyToOne(fetch = FetchType.LAZY)

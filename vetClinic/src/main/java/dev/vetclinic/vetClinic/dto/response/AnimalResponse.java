@@ -25,7 +25,4 @@ public class AnimalResponse {
 
     private LocalDate birthDate;
 
-    private String customerName;
-
-    private String customerPhone;
 }

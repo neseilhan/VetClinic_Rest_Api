@@ -11,10 +11,10 @@ public interface IAppointmentService {
 
     Appointment update(Appointment appointment);
 
-    Appointment get(long id);
+    Appointment get(Long id);
 
-    boolean delete(long id);
+    boolean delete(Long id);
 
     //Jpa ' nın Between findByBetween kullanimi.
-    List<Appointment> findByDoctorAndDateBetween(LocalDate startDate, LocalDate endDate, String animalName);
+    List<Appointment> findByAnimalAndDateBetween(LocalDate startDate, LocalDate endDate, String animalName);
 }
