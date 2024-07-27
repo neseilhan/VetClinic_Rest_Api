@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,12 +31,12 @@ public class Appointment {
 
     // Relations of tables
     @ManyToOne
-    @JsonManagedReference //postmande sonsuz donguyu onlemek icin.
+    @JsonIgnore //postmande sonsuz donguyu onlemek icin.
     @JoinColumn(name = "appointment_doctor_id", referencedColumnName = "doctor_id")
     private Doctor doctor;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
     @JoinColumn(name = "appointment_animal_id", referencedColumnName = "animal_id")
     private Animal animal;
 
