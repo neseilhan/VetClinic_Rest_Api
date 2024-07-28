@@ -27,14 +27,6 @@ public class ResultHelper {
         return new Result("400", Msg.NOT_AVAILABLE_ERROR, false);
     }
 
-    public static Result animalSelectIdNullError(){
-        return new Result("400", Msg.ANIMAL_SELECT_ID_NULL, false);
-    }
-
-    public static Result doctorSelectIdNullError(){
-        return new Result("400", Msg.DOCTOR_SELECT_ID_NULL, false);
-    }
-
 //    public static Result recordAlreadyExistsError(Long id, Class<CustomerResponse> customerResponseClass) {
 //        return new Result("409", id + Msg.RECORD_ALREADY_EXISTS, false);
 //    }
