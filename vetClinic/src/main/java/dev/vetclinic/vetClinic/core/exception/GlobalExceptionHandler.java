@@ -33,7 +33,7 @@ public class GlobalExceptionHandler  {
     @ExceptionHandler(vaccineValidityDateException.class)
     public ResponseEntity<Result> handleVaccineValidityDateException(vaccineValidityDateException e){
         Result result = ResultHelper.vaccineValidityError();
-        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
 
 //    @ExceptionHandler(appointmentAlreadyExistException.class)
@@ -42,6 +42,12 @@ public class GlobalExceptionHandler  {
 //        return new ResponseEntity<>(result, HttpStatus.CONFLICT);
 //    }
 
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Result> handleNotFoundException(NotFoundException e){
+        Result result = ResultHelper.notFoundError();
+        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(VaccineNotApplicableException.class)
     public ResponseEntity<Result> handleVaccineNotApplicableError(VaccineNotApplicableException e) {

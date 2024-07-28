@@ -67,7 +67,7 @@ public class VaccineManager implements IVaccineService {
         //        return vaccineRepo.findByEndDateBetween(startDate, endDate);
         List<Vaccine> vaccines = vaccineRepo.findByEndDateBetween(startDate, endDate);
         if (vaccines.isEmpty()) {
-            throw new recordNotFoundWithIdException(startDate.toEpochDay());
+            throw new NotFoundException(Msg.VACCINE_NULL);
         }
         return vaccines;
     }

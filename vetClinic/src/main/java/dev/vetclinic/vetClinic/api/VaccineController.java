@@ -18,6 +18,7 @@ import dev.vetclinic.vetClinic.dto.response.VaccineResponse;
 import dev.vetclinic.vetClinic.entities.Animal;
 import dev.vetclinic.vetClinic.entities.Vaccine;
 import jakarta.validation.Valid;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +52,11 @@ public class VaccineController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<VaccineResponse> getById(@PathVariable("id") Long id) {
-        Vaccine vaccine = this.vaccineService.get(id);
-        VaccineResponse vaccineResponse = this.modelMapper.forResponse().map(vaccine,VaccineResponse.class);
+        Vaccine vaccine = vaccineService.get(id);
+        if (vaccine == null) {
+            throw new NotFoundException(Msg.NOT_FOUND);
+        }
+        VaccineResponse vaccineResponse = this.modelMapper.forResponse().map(vaccine, VaccineResponse.class);
         return ResultHelper.success(vaccineResponse);
     }
 
@@ -65,7 +69,6 @@ public class VaccineController {
         return ResultHelper.created(vaccineResponse);
 
     }
-
 
     @GetMapping("/animal/{animalId}")
     @ResponseStatus(HttpStatus.OK)
@@ -95,14 +98,13 @@ public class VaccineController {
     @GetMapping("/validity")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<List<VaccineResponse>> getVaccinesByEndDateBetween(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
-        try {
             List<Vaccine> vaccines = vaccineService.getVaccinesByEndDateBetween(startDate, endDate);
             List<VaccineResponse> vaccineResponses = vaccines.stream()
                     .map(vaccine -> modelMapper.forResponse().map(vaccine, VaccineResponse.class))
                     .toList();
+            if (vaccines.isEmpty()) {
+                throw new NotFoundException(Msg.VACCINE_NULL);
+            }
             return ResultHelper.success(vaccineResponses);
-        } catch (NotFoundException e) {
-            return (ResultData<List<VaccineResponse>>) ResultHelper.recordNotFoundWithId(startDate.toEpochDay());
-        }
     }
 }

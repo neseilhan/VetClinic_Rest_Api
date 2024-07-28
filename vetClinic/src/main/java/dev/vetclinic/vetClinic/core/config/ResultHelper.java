@@ -46,11 +46,11 @@ public class ResultHelper {
     }
 
     public static Result vaccineValidityError() {
-        return new Result("400", Msg.DATE_ERROR, false);
+        return new Result("400", Msg.VACCINE_ERROR, false);
     }
 
     public static Result vaccineNotApplicableError() {
-        return new Result("400",  Msg.VACCINE_ERROR , false);
+        return new Result("400",  Msg.DATE_ERROR , false);
     }
 
     public static <T> ResultData<T> appointmentAlreadyExistError(Long id, T data) {
