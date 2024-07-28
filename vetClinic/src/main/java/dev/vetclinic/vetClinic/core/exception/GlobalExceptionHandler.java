@@ -20,7 +20,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(appointmentHoursException.class)
     public ResponseEntity<Result> appointmentHoursException(appointmentHoursException e) {
-        Result result = ResultHelper.vaccineNotApplicableError(e.getMessage());
+        Result result = ResultHelper.appointmentHoursError();
         return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
 
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(vaccineValidityDateException.class)
     public ResponseEntity<Result> handleVaccineValidityDateException(vaccineValidityDateException e){
-        Result result = ResultHelper.vaccineValidityError(e.getMessage());
+        Result result = ResultHelper.vaccineValidityError();
         return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler  {
 
     @ExceptionHandler(VaccineNotApplicableException.class)
     public ResponseEntity<Result> handleVaccineNotApplicableError(VaccineNotApplicableException e) {
-        Result result = ResultHelper.vaccineNotApplicableError(e.getMessage());
+        Result result = ResultHelper.vaccineNotApplicableError();
         return new ResponseEntity<>(result, HttpStatus.CONFLICT);
     }
 

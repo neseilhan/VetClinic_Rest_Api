@@ -29,7 +29,7 @@ public class VaccineManager implements IVaccineService {
     @Override
     public Vaccine save(Vaccine vaccine) {
         if (vaccine.getEndDate().isBefore(LocalDate.now())) {
-                throw new RuntimeException(ResultHelper.vaccineValidityError(Msg.DATE_ERROR).getMessage());
+                throw new VaccineNotApplicableException(Msg.DATE_ERROR);
             }
         List<Vaccine> existingVaccineList = this.vaccineRepo.findByNameAndCode(
                 vaccine.getName(),
@@ -38,7 +38,7 @@ public class VaccineManager implements IVaccineService {
         );
         for(Vaccine existingVaccine : existingVaccineList){
             if(existingVaccine.getCode().equals(vaccine.getCode()) && existingVaccine.getName().equals(vaccine.getName())){
-                throw new RuntimeException(ResultHelper.vaccineNotApplicableError(Msg.VACCINE_ERROR).getMessage());
+                throw new VaccineNotApplicableException(Msg.DATE_ERROR);
             }
         }
         // Yeni aşı kaydı oluşturulurken ID'nin null olduğundan emin olun
@@ -80,7 +80,7 @@ public class VaccineManager implements IVaccineService {
 
     @Override
     public Vaccine get(Long id) {
-        return this.vaccineRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+        return vaccineRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
     }
 
     @Override

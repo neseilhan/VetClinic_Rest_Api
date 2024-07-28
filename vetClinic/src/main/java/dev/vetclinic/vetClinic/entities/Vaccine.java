@@ -1,6 +1,8 @@
 package dev.vetclinic.vetClinic.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,8 +38,9 @@ public class Vaccine {
 
     // Relations of tables
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "animal_vaccine_id", referencedColumnName = "animal_id")
+    @JsonIgnore
     private Animal animal;
 
 

@@ -33,25 +33,12 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<CustomerResponse> save(@Valid @RequestBody CustomerSaveRequest customerSaveRequest) {
-        // Convert the request DTO to the entity
-        Customer customer = modelMapper.forRequest().map(customerSaveRequest, Customer.class);
+        Customer saveCustomer= this.modelMapper.forRequest().map(customerSaveRequest,Customer.class);
 
-        try {
-            // Save the customer entity
-            Customer saveCustomer = customerService.save(customer);
-
-            // Convert the saved entity to response DTO
-            CustomerResponse customerResponse = this.modelMapper.forResponse().map(saveCustomer, CustomerResponse.class);
-            return ResultHelper.created(customerResponse);
-        } catch (recordAlreadyExistException e) {
-            // Fetch the existing customer entity
-            Customer existingCustomer = customerService.get(e.getId());
-            // Convert the existing entity to response DTO
-            CustomerResponse existingCustomerResponse = this.modelMapper.forResponse().map(existingCustomer, CustomerResponse.class);
-            // Handle case where record already exists
-            return ResultHelper.recordAlreadyExistsError(e.getId(), existingCustomerResponse);
-        }
+        this.customerService.save(saveCustomer);
+        return ResultHelper.created(this.modelMapper.forResponse().map(saveCustomer,CustomerResponse.class));
     }
+
 
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)

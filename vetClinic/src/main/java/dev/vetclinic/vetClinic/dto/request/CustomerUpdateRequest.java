@@ -16,6 +16,7 @@ public class CustomerUpdateRequest {
     @Positive(message = "Id must be a positive number.")
     @NotNull
     private Long id;
+
     @NotNull(message = "Customer name cannot be null.")
     @NotEmpty
     private String name;

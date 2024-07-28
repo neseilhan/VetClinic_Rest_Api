@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.dto.request;
 
+import dev.vetclinic.vetClinic.entities.Animal;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,6 @@ public class VaccineSaveRequest {
 
     @NotNull(message = "Animal ID can not be null.")
     private Long animalId;
+
+//    private Animal animal;
 }

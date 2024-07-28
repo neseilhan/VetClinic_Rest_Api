@@ -45,19 +45,19 @@ public class ResultHelper {
         return new Result("404",  Msg.RECORD_NOT_FOUND_WITH_ID +id,   false);
     }
 
-    public static Result vaccineValidityError(String Message) {
+    public static Result vaccineValidityError() {
         return new Result("400", Msg.DATE_ERROR, false);
     }
 
-    public static Result vaccineNotApplicableError(String Message) {
-        return new Result("409",  Msg.VACCINE_ERROR , false);
+    public static Result vaccineNotApplicableError() {
+        return new Result("400",  Msg.VACCINE_ERROR , false);
     }
 
     public static <T> ResultData<T> appointmentAlreadyExistError(Long id, T data) {
         return new ResultData<>("409",  Msg.DOCTOR_ERROR +id, false, data);
     }
 
-    public static Result appointmentHoursError(String Message) {
+    public static Result appointmentHoursError() {
         return new Result("409",  Msg.APPOINTMENT_ERROR , false);
     }
 }

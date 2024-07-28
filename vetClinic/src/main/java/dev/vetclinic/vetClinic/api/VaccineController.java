@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.api;
 
+import dev.vetclinic.vetClinic.business.abstracts.IAnimalService;
 import dev.vetclinic.vetClinic.business.abstracts.IVaccineService;
 import dev.vetclinic.vetClinic.core.config.Msg;
 import dev.vetclinic.vetClinic.core.config.Result;
@@ -11,8 +12,10 @@ import dev.vetclinic.vetClinic.core.exception.recordAlreadyExistException;
 import dev.vetclinic.vetClinic.core.exception.recordNotFoundWithIdException;
 import dev.vetclinic.vetClinic.core.modelMapper.IModelMapperService;
 import dev.vetclinic.vetClinic.dto.request.VaccineSaveRequest;
+import dev.vetclinic.vetClinic.dto.request.VaccineUpdateRequest;
 import dev.vetclinic.vetClinic.dto.response.CustomerResponse;
 import dev.vetclinic.vetClinic.dto.response.VaccineResponse;
+import dev.vetclinic.vetClinic.entities.Animal;
 import dev.vetclinic.vetClinic.entities.Vaccine;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -27,10 +30,12 @@ import java.util.List;
 public class VaccineController {
 
     private final IVaccineService vaccineService;
+    private final IAnimalService animalService;
     private final IModelMapperService modelMapper;
 
-    public VaccineController(IVaccineService vaccineService, IModelMapperService modelMapper) {
+    public VaccineController(IVaccineService vaccineService, IAnimalService animalService, IModelMapperService modelMapper) {
         this.vaccineService = vaccineService;
+        this.animalService = animalService;
         this.modelMapper = modelMapper;
     }
 
@@ -45,30 +50,22 @@ public class VaccineController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<VaccineResponse> getById(@PathVariable Long id) {
-        try {
-            Vaccine vaccine = vaccineService.get(id);
-            VaccineResponse vaccineResponse = modelMapper.forResponse().map(vaccine, VaccineResponse.class);
-            return ResultHelper.success(vaccineResponse);
-        } catch (NotFoundException e) {
-            return (ResultData<VaccineResponse>) ResultHelper.recordNotFoundWithId(id);
-        }
+    public ResultData<VaccineResponse> getById(@PathVariable("id") Long id) {
+        Vaccine vaccine = this.vaccineService.get(id);
+        VaccineResponse vaccineResponse = this.modelMapper.forResponse().map(vaccine,VaccineResponse.class);
+        return ResultHelper.success(vaccineResponse);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<VaccineResponse> update(@PathVariable Long vaccineId, @Valid @RequestBody VaccineSaveRequest vaccineSaveRequest) {
-        Vaccine vaccine = modelMapper.forRequest().map(vaccineSaveRequest, Vaccine.class);
-        vaccine.setId((vaccineId)); // Ensure the vaccine has the correct ID
-        try {
-            Vaccine existingVaccine = vaccineService.get(vaccineId);
-            Vaccine updatedVaccine = vaccineService.update(vaccine);
-            VaccineResponse vaccineResponse = modelMapper.forResponse().map(updatedVaccine, VaccineResponse.class);
-            return ResultHelper.success(vaccineResponse);
-        } catch (NotFoundException e) {
-            return (ResultData<VaccineResponse>) ResultHelper.recordNotFoundWithId(vaccineId);
-        }
+    public ResultData<VaccineResponse> update(@Valid @RequestBody VaccineUpdateRequest vaccineUpdateRequest) {
+        Vaccine updateVaccine = this.modelMapper.forRequest().map(vaccineUpdateRequest, Vaccine.class);
+        this.vaccineService.save(updateVaccine);
+        VaccineResponse vaccineResponse = this.modelMapper.forResponse().map(updateVaccine, VaccineResponse.class);
+        return ResultHelper.created(vaccineResponse);
+
     }
+
 
     @GetMapping("/animal/{animalId}")
     @ResponseStatus(HttpStatus.OK)

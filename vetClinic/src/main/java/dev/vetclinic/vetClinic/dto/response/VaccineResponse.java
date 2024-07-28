@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.dto.response;
 
+import dev.vetclinic.vetClinic.entities.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class VaccineResponse {
 
     private LocalDate endDate;
 
-    private AnimalResponse animal;
+//    private Animal animal;
 }

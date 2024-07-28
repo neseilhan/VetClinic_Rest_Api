@@ -101,7 +101,7 @@ public class AnimalController {
         return ResultHelper.success(customerResponse);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Result update(@PathVariable("id") Long id, @RequestBody Animal animal) {
         try {

@@ -60,13 +60,9 @@ public class AnimalManager implements IAnimalService {
     @Override
     public Customer getByCustomerName(String name) {
         Customer customer;
-        try {
-            customer = this.animalRepo.findByCustomerName(name);
-            if (customer == null) {
+        customer = this.animalRepo.findByCustomerName(name);
+        if (customer == null) {
                 throw new NotFoundException(Msg.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            throw new NotFoundException(Msg.NOT_FOUND);
         }
         return customer;
     }
