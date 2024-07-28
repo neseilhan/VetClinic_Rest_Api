@@ -35,16 +35,6 @@ public class AnimalController {
         this.modelMapper = modelMapper;
     }
 
-//    @PostMapping("/save")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
-//        Animal saveAnimal = this.modelMapper.forRequest().map(animalSaveRequest, Animal.class);
-//        this.animalService.save(saveAnimal);
-//        AnimalResponse animalResponse = this.modelMapper.forResponse().map(saveAnimal, AnimalResponse.class);
-//        return ResultHelper.created(animalResponse);
-//    }
-
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
@@ -114,19 +104,17 @@ public class AnimalController {
             // Handle other exceptions if needed
             return new Result("500", "Internal server error", false);
         }
-
         return ResultHelper.ok();
     }
+
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Result delete(@PathVariable("id") Long id) {
         try {
             this.animalService.delete(id);
         } catch (NotFoundException e) {
-            // Kayıt bulunamadığında uygun HTTP durum kodunu döndürür
             return ResultHelper.recordNotFoundWithId(id);
         }
-
         return ResultHelper.ok();
     }
 

@@ -46,7 +46,7 @@ public class AppointmentManager implements IAppointmentService {
         boolean hasExactAppointment = appointmentRepository.existsByDoctorAndAppointmentDateAndAppointmentTime(
                 appointment.getDoctor(), appointment.getAppointmentDate(), appointment.getAppointmentTime());
 
-        if (hasExactAppointment) { //?
+        if (hasExactAppointment) { //
             throw new appointmentAlreadyExistException(Msg.APPOINTMENT_ALREADY_EXISTS);
         }
         List<Appointment> existingAppointments = appointmentRepository.findByDoctorAndAppointmentDate(

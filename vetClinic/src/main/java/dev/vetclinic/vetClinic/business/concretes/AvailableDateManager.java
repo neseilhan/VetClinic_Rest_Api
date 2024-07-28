@@ -31,7 +31,6 @@ public class AvailableDateManager implements IAvailableDateService {
         if (existingAvailableDate.isPresent()) {
             throw new recordAlreadyExistException(existingAvailableDate.get().getId());
         }
-
         return this.availableDateRepository.save(availableDate);
     }
 

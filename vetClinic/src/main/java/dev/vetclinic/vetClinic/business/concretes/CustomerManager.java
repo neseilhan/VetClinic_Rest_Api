@@ -20,12 +20,9 @@ public class CustomerManager implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) {
-        // Check if a customer with the same name already exists
         if (customerRepo.findByName(customer.getName()) != null) {
             throw new recordAlreadyExistException(customer.getId());
         }
-
-        // Save the customer entity
         return customerRepo.save(customer);
     }
 

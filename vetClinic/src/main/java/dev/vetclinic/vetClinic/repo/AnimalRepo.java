@@ -12,6 +12,5 @@ public interface AnimalRepo extends JpaRepository <Animal, Long> {
 
     Animal findByName(String name);
 //     List<Animal> findByName(String name);
-
     Customer findByCustomerName(String name);
 }
