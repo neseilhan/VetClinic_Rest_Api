@@ -9,7 +9,9 @@ import dev.vetclinic.vetClinic.core.modelMapper.IModelMapperService;
 import dev.vetclinic.vetClinic.dto.request.AvailableDateSaveRequest;
 import dev.vetclinic.vetClinic.dto.request.AvailableDateUpdateRequest;
 import dev.vetclinic.vetClinic.dto.response.AvailableDateResponse;
+import dev.vetclinic.vetClinic.dto.response.DoctorResponse;
 import dev.vetclinic.vetClinic.entities.AvailableDate;
+import dev.vetclinic.vetClinic.entities.Doctor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,14 @@ public class AvailableDateController {
         this.availableDateService.save(saveAvailableDate);
         AvailableDateResponse availableDateResponse = this.modelMapper.forResponse().map(saveAvailableDate, AvailableDateResponse.class);
         return ResultHelper.created(availableDateResponse);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<AvailableDateResponse> get(@PathVariable("id") Long id ){
+        AvailableDate availableDate = this.availableDateService.get(id);
+        AvailableDateResponse availableDateResponse = this.modelMapper.forResponse().map(availableDate, AvailableDateResponse.class);
+        return ResultHelper.success(availableDateResponse);
     }
 
     @PutMapping

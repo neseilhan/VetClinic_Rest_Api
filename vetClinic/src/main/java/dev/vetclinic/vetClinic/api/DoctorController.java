@@ -49,6 +49,14 @@ public class DoctorController {
         }
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<DoctorResponse> get(@PathVariable("id") Long id ){
+        Doctor doctor = this.doctorService.get(id);
+        DoctorResponse doctorResponse = this.modelMapper.forResponse().map(doctor, DoctorResponse.class);
+        return ResultHelper.success(doctorResponse);
+    }
+
     @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<DoctorResponse> getByName(@PathVariable("name") String name){

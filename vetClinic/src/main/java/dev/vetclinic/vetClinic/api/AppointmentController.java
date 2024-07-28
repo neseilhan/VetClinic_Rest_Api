@@ -5,15 +5,10 @@ import dev.vetclinic.vetClinic.core.config.Msg;
 import dev.vetclinic.vetClinic.core.config.Result;
 import dev.vetclinic.vetClinic.core.config.ResultData;
 import dev.vetclinic.vetClinic.core.config.ResultHelper;
-import dev.vetclinic.vetClinic.core.exception.appointmentAlreadyExistException;
-import dev.vetclinic.vetClinic.core.exception.appointmentHoursException;
-import dev.vetclinic.vetClinic.core.exception.recordAlreadyExistException;
 import dev.vetclinic.vetClinic.core.modelMapper.IModelMapperService;
 import dev.vetclinic.vetClinic.dto.request.AppointmentSaveRequest;
 import dev.vetclinic.vetClinic.dto.request.AppointmentUpdateRequest;
-import dev.vetclinic.vetClinic.dto.response.AnimalResponse;
 import dev.vetclinic.vetClinic.dto.response.AppointmentResponse;
-import dev.vetclinic.vetClinic.entities.Animal;
 import dev.vetclinic.vetClinic.entities.Appointment;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -46,6 +41,14 @@ public class AppointmentController {
         @RequestParam LocalDate endDate,
         @RequestParam String animalName) {
     return appointmentService.findByAnimalAndDateBetween(startDate, endDate, animalName);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<AppointmentResponse> get(@PathVariable("id") Long id ){
+        Appointment appointment = this.appointmentService.get(id);
+        AppointmentResponse appointmentResponse = this.modelMapper.forResponse().map(appointment, AppointmentResponse.class);
+        return ResultHelper.success(appointmentResponse);
     }
 
     @PutMapping
