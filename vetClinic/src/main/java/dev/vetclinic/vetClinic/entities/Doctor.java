@@ -42,5 +42,6 @@ public class Doctor {
     private List<Appointment> appointmentList;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.REMOVE)
+    @JsonBackReference
     private List<AvailableDate> availableDateList;
 }

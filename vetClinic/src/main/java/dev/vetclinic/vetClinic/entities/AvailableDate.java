@@ -1,5 +1,6 @@
 package dev.vetclinic.vetClinic.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class AvailableDate {
     // Relations of tables
     @ManyToOne
     @JoinColumn(name = "date_doctor_id")
+    @JsonIgnore
     private Doctor doctor;
 }

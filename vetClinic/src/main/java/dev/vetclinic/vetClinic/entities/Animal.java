@@ -1,6 +1,7 @@
 package dev.vetclinic.vetClinic.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,15 +42,17 @@ public class Animal {
 
    // Relations of tables
 
-    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Appointment> appointmentList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_customer_id", referencedColumnName = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
-    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY,  cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Vaccine> vaccineList;
 
 
